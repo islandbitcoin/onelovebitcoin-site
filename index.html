@@ -227,37 +227,109 @@
     .feat-name{font-family:'Syne',sans-serif;font-weight:700;font-size:.87rem;margin-bottom:.35rem}
     .feat-text{font-size:.78rem;color:var(--muted);line-height:1.55}
 
-    /* ── COUNTRIES ── */
+    /* ── COUNTRIES DOT MAP ── */
     #countries{background:var(--bg)}
-    .countries-grid{
-      display:flex;flex-wrap:wrap;gap:.7rem;
-      margin-top:2.5rem;
-    }
-    .country-pill{
-      display:inline-flex;align-items:center;gap:.55rem;
+    .world-map-wrap{
+      position:relative;width:100%;aspect-ratio:2/1;
       background:var(--surface);border:1px solid var(--border);
-      border-radius:3rem;padding:.5rem 1rem;
-      text-decoration:none;color:var(--text);
-      font-size:.78rem;font-weight:500;
-      transition:all .18s;
+      border-radius:16px;overflow:hidden;margin-top:2.5rem;
+      min-height:280px;
     }
-    .country-pill:hover{
-      border-color:var(--orange);color:var(--orange);
-      background:rgba(247,147,26,.06);transform:translateY(-1px);
+    /* Graticule grid */
+    .map-graticule{
+      position:absolute;inset:0;
+      background:
+        repeating-linear-gradient(0deg,transparent,transparent calc(100%/6 - 1px),rgba(247,147,26,.04) calc(100%/6 - 1px),rgba(247,147,26,.04) calc(100%/6)),
+        repeating-linear-gradient(90deg,transparent,transparent calc(100%/12 - 1px),rgba(247,147,26,.04) calc(100%/12 - 1px),rgba(247,147,26,.04) calc(100%/12));
+      pointer-events:none;
     }
-    .country-pill .cflag{font-size:1.1rem}
+    /* Equator line */
+    .map-equator{
+      position:absolute;left:0;right:0;top:50%;
+      height:1px;background:rgba(247,147,26,.1);pointer-events:none;
+    }
+    /* Corner labels */
+    .map-label{
+      position:absolute;font-size:.6rem;letter-spacing:.1em;
+      text-transform:uppercase;color:rgba(240,237,232,.12);
+      font-weight:600;pointer-events:none;
+    }
+    .map-dot{
+      position:absolute;
+      transform:translate(-50%,-50%);
+      cursor:pointer;z-index:2;
+    }
+    .map-dot-inner{
+      width:7px;height:7px;border-radius:50%;
+      background:var(--orange);
+      box-shadow:0 0 10px rgba(247,147,26,.7);
+      animation:dotPulse 2.5s ease-in-out infinite;
+      transition:transform .18s;
+    }
+    .map-dot:hover .map-dot-inner{transform:scale(1.8)}
+    @keyframes dotPulse{
+      0%,100%{box-shadow:0 0 8px rgba(247,147,26,.65)}
+      50%{box-shadow:0 0 18px rgba(247,147,26,.9),0 0 30px rgba(247,147,26,.3)}
+    }
+    .map-tooltip{
+      position:absolute;bottom:calc(100% + 10px);left:50%;
+      transform:translateX(-50%);
+      background:rgba(9,9,14,.96);
+      border:1px solid rgba(247,147,26,.25);
+      border-radius:8px;padding:.35rem .75rem;
+      font-size:.7rem;font-weight:600;
+      white-space:nowrap;color:var(--text);
+      opacity:0;pointer-events:none;
+      transition:opacity .18s;
+      display:flex;align-items:center;gap:.4rem;
+    }
+    .map-tooltip::after{
+      content:'';position:absolute;top:100%;left:50%;
+      transform:translateX(-50%);
+      border:5px solid transparent;
+      border-top-color:rgba(247,147,26,.25);
+    }
+    .map-dot:hover .map-tooltip{opacity:1}
+    .map-legend{
+      position:absolute;bottom:1rem;right:1rem;
+      display:flex;align-items:center;gap:.6rem;
+      font-size:.62rem;color:var(--muted);letter-spacing:.08em;
+      pointer-events:none;
+    }
+    .map-legend-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px rgba(247,147,26,.6)}
 
     /* ── EPISODES ── */
     #episodes{background:var(--surface)}
     .ep-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2.5rem;flex-wrap:wrap;gap:1.2rem}
     .filters{display:flex;gap:.5rem;flex-wrap:wrap}
-    .filter-btn{
-      background:var(--surface2);border:1px solid var(--border);
-      border-radius:2rem;padding:.35rem 1.05rem;
-      font-size:.73rem;font-weight:600;letter-spacing:.05em;
-      color:var(--muted);cursor:pointer;transition:all .18s;
+    /* Season tabs — editorial, not pills */
+    .season-tabs{
+      display:flex;align-items:flex-end;gap:0;
+      border-bottom:1px solid var(--border);
     }
-    .filter-btn.active,.filter-btn:hover{background:var(--orange);border-color:var(--orange);color:#fff}
+    .season-tab{
+      padding:.9rem 1.8rem .9rem 0;
+      font-family:'Syne',sans-serif;font-weight:800;
+      font-size:clamp(.8rem,1.5vw,1rem);letter-spacing:.04em;
+      text-transform:uppercase;color:var(--muted);
+      cursor:pointer;background:none;border:none;
+      position:relative;transition:color .2s;line-height:1;
+      display:flex;flex-direction:column;gap:.25rem;
+    }
+    .season-tab:first-child{padding-left:0}
+    .season-tab-count{
+      font-family:'Inter',sans-serif;font-size:.62rem;
+      font-weight:400;letter-spacing:.1em;color:var(--muted);opacity:.5;
+    }
+    .season-tab::after{
+      content:'';position:absolute;bottom:-1px;left:0;right:1.8rem;
+      height:2px;background:var(--orange);
+      transform:scaleX(0);transform-origin:left;transition:transform .25s;
+    }
+    .season-tab:first-child::after{right:1.8rem}
+    .season-tab.active{color:var(--text)}
+    .season-tab.active::after{transform:scaleX(1)}
+    .season-tab.active .season-tab-count{color:var(--orange);opacity:1}
 
     .ep-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.2rem}
 
@@ -323,14 +395,21 @@
       font-size:.62rem;font-weight:700;color:var(--orange);
     }
     .ep-guest{font-size:.75rem;color:var(--muted)}
-    .ep-links{display:flex;gap:.5rem}
+    .ep-links{display:flex;gap:1rem}
     .ep-link{
       display:inline-flex;align-items:center;gap:.35rem;
-      font-size:.7rem;font-weight:600;padding:.28rem .72rem;
-      border-radius:2rem;text-decoration:none;transition:all .16s;border:1px solid;
+      font-size:.72rem;font-weight:600;
+      text-decoration:none;transition:all .18s;
+      position:relative;padding-bottom:1px;
     }
-    .ep-yt{color:#ff4444;border-color:rgba(255,68,68,.22);background:rgba(255,68,68,.05)}
-    .ep-yt:hover{background:rgba(255,68,68,.14);border-color:rgba(255,68,68,.45)}
+    .ep-link::after{
+      content:'';position:absolute;bottom:0;left:0;right:0;
+      height:1px;transform:scaleX(0);transform-origin:left;transition:transform .2s;
+    }
+    .ep-link:hover::after{transform:scaleX(1)}
+    .ep-yt{color:rgba(255,80,80,.85)}
+    .ep-yt::after{background:rgba(255,80,80,.6)}
+    .ep-yt:hover{color:#ff5050}
 
     /* Featured trailer */
     .ep-card.featured{grid-column:1/-1;display:grid;grid-template-columns:500px 1fr}
@@ -490,30 +569,41 @@
   <div class="container">
     <p class="sec-tag">Where We've Been</p>
     <h2 class="sec-title">20+ Countries.<br>One Sound Money.</h2>
-    <div class="countries-grid">
-      <a href="#episodes" class="country-pill"><span class="cflag">🇸🇻</span>El Salvador</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇯🇲</span>Jamaica</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇺🇸</span>United States</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇬🇧</span>United Kingdom</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇳🇬</span>Nigeria</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇿🇦</span>South Africa</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇨🇲</span>Cameroon</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇹🇬</span>Togo</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇸🇳</span>Senegal</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇪🇹</span>Ethiopia</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇳🇦</span>Namibia</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇨🇿</span>Czechia</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇷🇺</span>Russia</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇻🇪</span>Venezuela</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇨🇴</span>Colombia</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇹🇹</span>Trinidad &amp; Tobago</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇨🇦</span>Canada</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇬🇹</span>Guatemala</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇵🇦</span>Panama</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇦🇷</span>Argentina</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇱🇧</span>Lebanon</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇵🇸</span>Palestine</a>
-      <a href="#episodes" class="country-pill"><span class="cflag">🇳🇿</span>New Zealand</a>
+    <div class="world-map-wrap">
+      <div class="map-graticule"></div>
+      <div class="map-equator"></div>
+      <span class="map-label" style="top:.7rem;left:1rem">Americas</span>
+      <span class="map-label" style="top:.7rem;left:44%">Europe · Africa</span>
+      <span class="map-label" style="top:.7rem;right:1rem">Asia · Pacific</span>
+
+      <!-- Americas -->
+      <div class="map-dot" style="left:23%;top:30%"><div class="map-dot-inner"></div><div class="map-tooltip">🇨🇦 Canada</div></div>
+      <div class="map-dot" style="left:22%;top:47%"><div class="map-dot-inner"></div><div class="map-tooltip">🇺🇸 United States</div></div>
+      <div class="map-dot" style="left:24.9%;top:54%"><div class="map-dot-inner"></div><div class="map-tooltip">🇬🇹 Guatemala</div></div>
+      <div class="map-dot" style="left:25.2%;top:57%"><div class="map-dot-inner"></div><div class="map-tooltip">🇸🇻 El Salvador</div></div>
+      <div class="map-dot" style="left:27.8%;top:59%"><div class="map-dot-inner"></div><div class="map-tooltip">🇵🇦 Panama</div></div>
+      <div class="map-dot" style="left:28.3%;top:52%"><div class="map-dot-inner"></div><div class="map-tooltip">🇯🇲 Jamaica</div></div>
+      <div class="map-dot" style="left:33%;top:56%"><div class="map-dot-inner"></div><div class="map-tooltip">🇹🇹 Trinidad &amp; Tobago</div></div>
+      <div class="map-dot" style="left:31.7%;top:58%"><div class="map-dot-inner"></div><div class="map-tooltip">🇻🇪 Venezuela</div></div>
+      <div class="map-dot" style="left:30%;top:62%"><div class="map-dot-inner"></div><div class="map-tooltip">🇨🇴 Colombia</div></div>
+      <div class="map-dot" style="left:31.7%;top:78%"><div class="map-dot-inner"></div><div class="map-tooltip">🇦🇷 Argentina</div></div>
+      <!-- Europe + Africa -->
+      <div class="map-dot" style="left:49.4%;top:28%"><div class="map-dot-inner"></div><div class="map-tooltip">🇬🇧 United Kingdom</div></div>
+      <div class="map-dot" style="left:54.3%;top:30%"><div class="map-dot-inner"></div><div class="map-tooltip">🇨🇿 Czechia</div></div>
+      <div class="map-dot" style="left:59.9%;top:40%"><div class="map-dot-inner"></div><div class="map-tooltip">🇱🇧 Lebanon</div></div>
+      <div class="map-dot" style="left:59.8%;top:42%"><div class="map-dot-inner"></div><div class="map-tooltip">🇵🇸 Palestine</div></div>
+      <div class="map-dot" style="left:44%;top:57%"><div class="map-dot-inner"></div><div class="map-tooltip">🇸🇳 Senegal</div></div>
+      <div class="map-dot" style="left:50.3%;top:55%"><div class="map-dot-inner"></div><div class="map-tooltip">🇹🇬 Togo</div></div>
+      <div class="map-dot" style="left:53.3%;top:56%"><div class="map-dot-inner"></div><div class="map-tooltip">🇨🇲 Cameroon</div></div>
+      <div class="map-dot" style="left:52.2%;top:55%"><div class="map-dot-inner"></div><div class="map-tooltip">🇳🇬 Nigeria</div></div>
+      <div class="map-dot" style="left:61.1%;top:55%"><div class="map-dot-inner"></div><div class="map-tooltip">🇪🇹 Ethiopia</div></div>
+      <div class="map-dot" style="left:54.7%;top:73%"><div class="map-dot-inner"></div><div class="map-tooltip">🇳🇦 Namibia</div></div>
+      <div class="map-dot" style="left:56.9%;top:76%"><div class="map-dot-inner"></div><div class="map-tooltip">🇿🇦 South Africa</div></div>
+      <!-- Asia + Pacific -->
+      <div class="map-dot" style="left:77.8%;top:24%"><div class="map-dot-inner"></div><div class="map-tooltip">🇷🇺 Russia</div></div>
+      <div class="map-dot" style="left:93%;top:72%"><div class="map-dot-inner"></div><div class="map-tooltip">🇳🇿 New Zealand</div></div>
+
+      <div class="map-legend"><div class="map-legend-dot"></div>Episode filmed here</div>
     </div>
   </div>
 </section>
@@ -523,12 +613,12 @@
   <div class="container">
     <div class="ep-header">
       <div><p class="sec-tag">All Episodes</p><h2 class="sec-title">The Full Journey</h2></div>
-      <div class="filters">
-        <button class="filter-btn active" data-filter="all">All Seasons</button>
-        <button class="filter-btn" data-filter="4">Season 4</button>
-        <button class="filter-btn" data-filter="3">Season 3</button>
-        <button class="filter-btn" data-filter="2">Season 2</button>
-        <button class="filter-btn" data-filter="1">Season 1</button>
+      <div class="season-tabs">
+        <button class="season-tab active" data-filter="all">All<span class="season-tab-count">26+ eps</span></button>
+        <button class="season-tab" data-filter="4">Season 4<span class="season-tab-count">1 ep</span></button>
+        <button class="season-tab" data-filter="3">Season 3<span class="season-tab-count">7 eps</span></button>
+        <button class="season-tab" data-filter="2">Season 2<span class="season-tab-count">7 eps</span></button>
+        <button class="season-tab" data-filter="1">Season 1<span class="season-tab-count">10 eps</span></button>
       </div>
     </div>
 
@@ -801,10 +891,10 @@
   ).join('');
   mk.innerHTML=items;
 
-  // Season filter
-  document.querySelectorAll('.filter-btn').forEach(btn=>{
+  // Season tabs
+  document.querySelectorAll('.season-tab').forEach(btn=>{
     btn.addEventListener('click',()=>{
-      document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+      document.querySelectorAll('.season-tab').forEach(b=>b.classList.remove('active'));
       btn.classList.add('active');
       const f=btn.dataset.filter;
       document.querySelectorAll('.season-section').forEach(sec=>{
@@ -819,7 +909,7 @@
       if(e.isIntersecting){e.target.style.opacity='1';e.target.style.transform='translateY(0)'}
     });
   },{threshold:.06});
-  document.querySelectorAll('.ep-card,.feat-card,.plat-card,.country-pill').forEach(el=>{
+  document.querySelectorAll('.ep-card,.feat-card,.plat-card').forEach(el=>{
     el.style.opacity='0';el.style.transform='translateY(18px)';
     el.style.transition='opacity .42s ease,transform .42s ease';
     obs.observe(el);
