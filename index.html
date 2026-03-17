@@ -241,28 +241,19 @@
       background:var(--surface2);border:1px solid var(--border);
       overflow:hidden;min-height:260px;
     }
-    .map-graticule{
-      position:absolute;inset:0;
-      background:
-        repeating-linear-gradient(0deg,transparent,transparent calc(100%/6 - 1px),rgba(247,147,26,.035) calc(100%/6 - 1px),rgba(247,147,26,.035) calc(100%/6)),
-        repeating-linear-gradient(90deg,transparent,transparent calc(100%/12 - 1px),rgba(247,147,26,.035) calc(100%/12 - 1px),rgba(247,147,26,.035) calc(100%/12));
-      pointer-events:none;
-    }
-    .map-equator{position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(247,147,26,.09);pointer-events:none}
-    .map-region{position:absolute;font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(240,237,232,.1);font-weight:600;pointer-events:none}
-    .map-dot{position:absolute;transform:translate(-50%,-50%);cursor:pointer;z-index:2}
-    .map-dot-inner{width:7px;height:7px;border-radius:50%;background:var(--orange);box-shadow:0 0 10px rgba(247,147,26,.7);animation:dotPulse 2.5s ease-in-out infinite;transition:transform .18s}
-    .map-dot:hover .map-dot-inner{transform:scale(2)}
-    @keyframes dotPulse{0%,100%{box-shadow:0 0 8px rgba(247,147,26,.6)}50%{box-shadow:0 0 20px rgba(247,147,26,.9),0 0 32px rgba(247,147,26,.25)}}
-    .map-tip{
-      position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);
+    #world-svg{position:absolute;inset:0;width:100%;height:100%}
+    .map-land{fill:rgba(247,147,26,.07);stroke:rgba(247,147,26,.18);stroke-width:.4}
+    .map-graticule-line{fill:none;stroke:rgba(247,147,26,.04);stroke-width:.5}
+    .map-dot-g{cursor:pointer}
+    .map-dot-circle{fill:var(--orange);filter:drop-shadow(0 0 4px rgba(247,147,26,.7));animation:dotPulse 2.5s ease-in-out infinite}
+    @keyframes dotPulse{0%,100%{filter:drop-shadow(0 0 4px rgba(247,147,26,.6))}50%{filter:drop-shadow(0 0 12px rgba(247,147,26,.95))}}
+    .map-dot-g:hover .map-dot-circle{r:5}
+    .map-tooltip-svg{
+      position:absolute;
       background:rgba(9,9,14,.96);border:1px solid rgba(247,147,26,.22);
-      padding:.3rem .7rem;font-size:.66rem;font-weight:600;white-space:nowrap;color:var(--text);
-      opacity:0;pointer-events:none;transition:opacity .16s;
-      display:flex;align-items:center;gap:.4rem;
+      padding:.28rem .7rem;font-size:.66rem;font-weight:600;color:var(--text);
+      pointer-events:none;white-space:nowrap;opacity:0;transition:opacity .15s;
     }
-    .map-tip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:rgba(247,147,26,.22)}
-    .map-dot:hover .map-tip{opacity:1}
     .map-legend{position:absolute;bottom:.8rem;right:.8rem;display:flex;align-items:center;gap:.5rem;font-size:.58rem;color:var(--muted);letter-spacing:.08em;pointer-events:none}
     .map-legend-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 8px rgba(247,147,26,.5)}
 
@@ -561,38 +552,9 @@
         </div>
       </div>
       <div>
-        <div class="world-map-wrap">
-          <div class="map-graticule"></div>
-          <div class="map-equator"></div>
-          <span class="map-region" style="top:.6rem;left:.8rem">Americas</span>
-          <span class="map-region" style="top:.6rem;left:44%">Europe · Africa</span>
-          <span class="map-region" style="top:.6rem;right:.8rem">Asia · Pacific</span>
-          <!-- Americas -->
-          <div class="map-dot" style="left:23%;top:30%"><div class="map-dot-inner"></div><div class="map-tip">🇨🇦 Canada</div></div>
-          <div class="map-dot" style="left:22%;top:47%"><div class="map-dot-inner"></div><div class="map-tip">🇺🇸 United States</div></div>
-          <div class="map-dot" style="left:24.9%;top:54%"><div class="map-dot-inner"></div><div class="map-tip">🇬🇹 Guatemala</div></div>
-          <div class="map-dot" style="left:25.2%;top:57%"><div class="map-dot-inner"></div><div class="map-tip">🇸🇻 El Salvador</div></div>
-          <div class="map-dot" style="left:27.8%;top:59%"><div class="map-dot-inner"></div><div class="map-tip">🇵🇦 Panama</div></div>
-          <div class="map-dot" style="left:28.3%;top:52%"><div class="map-dot-inner"></div><div class="map-tip">🇯🇲 Jamaica</div></div>
-          <div class="map-dot" style="left:33%;top:56%"><div class="map-dot-inner"></div><div class="map-tip">🇹🇹 Trinidad &amp; Tobago</div></div>
-          <div class="map-dot" style="left:31.7%;top:58%"><div class="map-dot-inner"></div><div class="map-tip">🇻🇪 Venezuela</div></div>
-          <div class="map-dot" style="left:30%;top:62%"><div class="map-dot-inner"></div><div class="map-tip">🇨🇴 Colombia</div></div>
-          <div class="map-dot" style="left:31.7%;top:78%"><div class="map-dot-inner"></div><div class="map-tip">🇦🇷 Argentina</div></div>
-          <!-- Europe + Africa -->
-          <div class="map-dot" style="left:49.4%;top:28%"><div class="map-dot-inner"></div><div class="map-tip">🇬🇧 United Kingdom</div></div>
-          <div class="map-dot" style="left:54.3%;top:30%"><div class="map-dot-inner"></div><div class="map-tip">🇨🇿 Czechia</div></div>
-          <div class="map-dot" style="left:59.9%;top:40%"><div class="map-dot-inner"></div><div class="map-tip">🇱🇧 Lebanon</div></div>
-          <div class="map-dot" style="left:59.8%;top:42%"><div class="map-dot-inner"></div><div class="map-tip">🇵🇸 Palestine</div></div>
-          <div class="map-dot" style="left:44%;top:57%"><div class="map-dot-inner"></div><div class="map-tip">🇸🇳 Senegal</div></div>
-          <div class="map-dot" style="left:50.3%;top:55%"><div class="map-dot-inner"></div><div class="map-tip">🇹🇬 Togo</div></div>
-          <div class="map-dot" style="left:53.3%;top:56%"><div class="map-dot-inner"></div><div class="map-tip">🇨🇲 Cameroon</div></div>
-          <div class="map-dot" style="left:52.2%;top:55%"><div class="map-dot-inner"></div><div class="map-tip">🇳🇬 Nigeria</div></div>
-          <div class="map-dot" style="left:61.1%;top:55%"><div class="map-dot-inner"></div><div class="map-tip">🇪🇹 Ethiopia</div></div>
-          <div class="map-dot" style="left:54.7%;top:73%"><div class="map-dot-inner"></div><div class="map-tip">🇳🇦 Namibia</div></div>
-          <div class="map-dot" style="left:56.9%;top:76%"><div class="map-dot-inner"></div><div class="map-tip">🇿🇦 South Africa</div></div>
-          <!-- Asia + Pacific -->
-          <div class="map-dot" style="left:77.8%;top:24%"><div class="map-dot-inner"></div><div class="map-tip">🇷🇺 Russia</div></div>
-          <div class="map-dot" style="left:93%;top:72%"><div class="map-dot-inner"></div><div class="map-tip">🇳🇿 New Zealand</div></div>
+        <div class="world-map-wrap" id="map-wrap">
+          <svg id="world-svg"></svg>
+          <div id="map-tooltip" class="map-tooltip-svg"></div>
           <div class="map-legend"><div class="map-legend-dot"></div>Episode filmed here</div>
         </div>
       </div>
@@ -623,6 +585,8 @@
   </div>
 </footer>
 
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
 <script>
   // Progress bar
   window.addEventListener('scroll',()=>{
@@ -653,6 +617,86 @@
   // Scroll reveal
   const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.style.opacity='1';x.target.style.transform='translateY(0)'}})},{threshold:.06});
   document.querySelectorAll('.ep-card').forEach(el=>{el.style.opacity='0';el.style.transform='translateY(16px)';el.style.transition='opacity .4s ease,transform .4s ease';obs.observe(el)});
+
+  // D3 World Map
+  const episodes=[
+    {name:'Canada',flag:'🇨🇦',coords:[-96.8,56.1]},
+    {name:'United States',flag:'🇺🇸',coords:[-95.7,37.1]},
+    {name:'Jamaica',flag:'🇯🇲',coords:[-77.3,18.1]},
+    {name:'Guatemala',flag:'🇬🇹',coords:[-90.2,15.8]},
+    {name:'El Salvador',flag:'🇸🇻',coords:[-88.8,13.7]},
+    {name:'Panama',flag:'🇵🇦',coords:[-80.2,8.5]},
+    {name:'Trinidad & Tobago',flag:'🇹🇹',coords:[-61.2,10.7]},
+    {name:'Venezuela',flag:'🇻🇪',coords:[-66.6,7.1]},
+    {name:'Colombia',flag:'🇨🇴',coords:[-74.3,4.1]},
+    {name:'Argentina',flag:'🇦🇷',coords:[-63.6,-38.4]},
+    {name:'United Kingdom',flag:'🇬🇧',coords:[-3.4,55.4]},
+    {name:'Czechia',flag:'🇨🇿',coords:[15.5,49.8]},
+    {name:'Russia',flag:'🇷🇺',coords:[100.0,61.5]},
+    {name:'Lebanon',flag:'🇱🇧',coords:[35.9,33.9]},
+    {name:'Palestine',flag:'🇵🇸',coords:[35.2,31.9]},
+    {name:'Senegal',flag:'🇸🇳',coords:[-14.5,14.5]},
+    {name:'Togo',flag:'🇹🇬',coords:[0.8,8.6]},
+    {name:'Cameroon',flag:'🇨🇲',coords:[12.4,5.7]},
+    {name:'Nigeria',flag:'🇳🇬',coords:[8.7,9.1]},
+    {name:'Ethiopia',flag:'🇪🇹',coords:[40.5,9.1]},
+    {name:'Namibia',flag:'🇳🇦',coords:[17.1,-22.0]},
+    {name:'South Africa',flag:'🇿🇦',coords:[25.1,-29.0]},
+    {name:'New Zealand',flag:'🇳🇿',coords:[172.8,-41.0]},
+  ];
+
+  function drawMap(){
+    const wrap=document.getElementById('map-wrap');
+    const W=wrap.clientWidth, H=wrap.clientHeight;
+    if(!W||!H) return;
+    const svg=d3.select('#world-svg').attr('viewBox',`0 0 ${W} ${H}`);
+    svg.selectAll('*').remove();
+    const proj=d3.geoEquirectangular().scale(W/6.4).translate([W/2,H/2]);
+    const path=d3.geoPath().projection(proj);
+
+    d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(world=>{
+      // Graticule
+      svg.append('path')
+        .datum(d3.geoGraticule()())
+        .attr('class','map-graticule-line')
+        .attr('d',path);
+      // Land
+      svg.append('path')
+        .datum(topojson.feature(world,world.objects.land))
+        .attr('class','map-land')
+        .attr('d',path);
+      // Country borders
+      svg.append('path')
+        .datum(topojson.mesh(world,world.objects.countries))
+        .attr('fill','none')
+        .attr('stroke','rgba(247,147,26,.06)')
+        .attr('stroke-width',.3)
+        .attr('d',path);
+
+      // Episode dots
+      const tooltip=document.getElementById('map-tooltip');
+      episodes.forEach(ep=>{
+        const [x,y]=proj(ep.coords);
+        if(!x||!y||x<0||x>W||y<0||y>H) return;
+        const g=svg.append('g').attr('class','map-dot-g').attr('transform',`translate(${x},${y})`);
+        g.append('circle').attr('class','map-dot-circle').attr('r',3.5);
+        g.on('mouseenter',function(event){
+          d3.select(this).select('circle').attr('r',6);
+          tooltip.textContent=ep.flag+' '+ep.name;
+          tooltip.style.opacity='1';
+          const bw=wrap.getBoundingClientRect();
+          const ex=event.clientX-bw.left, ey=event.clientY-bw.top;
+          tooltip.style.left=(ex-tooltip.offsetWidth/2)+'px';
+          tooltip.style.top=(ey-tooltip.offsetHeight-12)+'px';
+        }).on('mouseleave',function(){
+          d3.select(this).select('circle').attr('r',3.5);
+          tooltip.style.opacity='0';
+        });
+      });
+    }).catch(()=>{});
+  }
+  drawMap();
+  window.addEventListener('resize',drawMap);
 </script>
 </body>
 </html>
