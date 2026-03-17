@@ -98,14 +98,27 @@
 
     .hero-title{
       font-family:'Bebas Neue',sans-serif;
-      font-size:clamp(4rem,13vw,11rem);
       line-height:.88;letter-spacing:.04em;
       margin-bottom:1.4rem;
     }
-    .hero-title-1{color:var(--text);display:block}
+    .hero-title-pre{
+      font-size:clamp(1.4rem,4vw,3rem);
+      color:var(--muted);display:block;
+      letter-spacing:.22em;margin-bottom:.3em;
+    }
+    .hero-title-1{
+      font-size:clamp(3.2rem,11vw,9rem);
+      color:var(--text);display:block;line-height:.85;
+    }
     .hero-title-2{
-      color:var(--orange);display:block;
+      font-size:clamp(3.2rem,11vw,9rem);
+      color:var(--orange);display:block;line-height:.85;
       text-shadow:0 0 80px rgba(247,147,26,.3),0 0 160px rgba(247,147,26,.12);
+    }
+    .hero-title-post{
+      font-size:clamp(1.4rem,4vw,3rem);
+      color:var(--muted);display:block;
+      letter-spacing:.22em;margin-top:.35em;
     }
 
     .hero-tagline{
@@ -327,13 +340,15 @@
   <div class="hero-glow"></div>
   <div class="particles" id="particles"></div>
   <div class="hero-inner">
-    <div class="hero-eyebrow">A global Bitcoin interview series</div>
+    <div class="hero-eyebrow">A global Bitcoin interview archive</div>
     <h1 class="hero-title">
+      <span class="hero-title-pre">The</span>
       <span class="hero-title-1">One Love</span>
       <span class="hero-title-2">Bitcoin</span>
+      <span class="hero-title-post">Archives</span>
     </h1>
     <p class="hero-tagline">Bitcoin · Around · The · World</p>
-    <p class="hero-desc">Conversations with Bitcoin advocates from every corner of the globe. Discover how the orange coin is changing lives — one country at a time.</p>
+    <p class="hero-desc">A complete archive of conversations with Bitcoin advocates from every corner of the globe — exploring how the orange coin is changing lives, one country at a time.</p>
     <div class="hero-actions">
       <a href="#episodes" class="btn btn-primary">▶&nbsp; Watch Episodes</a>
       <a href="https://www.youtube.com/@onelovebitcoin" target="_blank" class="btn btn-ghost">Subscribe on YouTube</a>
