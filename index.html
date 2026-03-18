@@ -755,11 +755,13 @@
   // Video modal
   function openVid(url,title){
     var p=document.getElementById('vid-player');
+    p.crossOrigin='anonymous';
     p.src=url; p.load();
     document.getElementById('vid-title').textContent=title||'';
     document.getElementById('vid-direct').href=url;
     document.getElementById('vid-modal').classList.add('open');
     document.body.style.overflow='hidden';
+    p.play().catch(function(){});
   }
   function closeVid(){
     var p=document.getElementById('vid-player');
@@ -795,7 +797,7 @@
 <!-- VIDEO MODAL -->
 <div class="vid-modal" id="vid-modal" onclick="if(event.target===this)closeVid()">
   <div class="vid-inner">
-    <video id="vid-player" controls preload="metadata" playsinline></video>
+    <video id="vid-player" controls preload="none" playsinline crossorigin="anonymous"></video>
     <div class="vid-meta">
       <span class="vid-title" id="vid-title"></span>
       <div class="vid-actions">
