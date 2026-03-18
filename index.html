@@ -309,6 +309,24 @@
       .stat-num{font-size:1.8rem}
       .season-tab{padding:.7rem 1.2rem .7rem 0;font-size:1rem}
     }
+
+    /* ── VIDEO MODAL ── */
+    .vid-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;
+      justify-content:center;background:rgba(0,0,0,.88);backdrop-filter:blur(6px);
+      opacity:0;pointer-events:none;transition:opacity .25s}
+    .vid-modal.open{opacity:1;pointer-events:all}
+    .vid-inner{position:relative;width:min(92vw,960px);background:#0d0d14;
+      border-radius:12px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.6)}
+    .vid-inner video{display:block;width:100%;max-height:72vh;background:#000}
+    .vid-meta{padding:1rem 1.25rem;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+    .vid-title{font-size:.95rem;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+    .vid-actions{display:flex;gap:.75rem;flex-shrink:0}
+    .vid-direct{font-size:.78rem;color:var(--orange);text-decoration:none;border:1px solid rgba(247,147,26,.3);
+      padding:.3rem .75rem;border-radius:6px;white-space:nowrap;transition:all .2s}
+    .vid-direct:hover{background:rgba(247,147,26,.1)}
+    .vid-close{background:none;border:none;color:rgba(255,255,255,.5);font-size:1.4rem;
+      cursor:pointer;line-height:1;padding:.2rem .4rem;border-radius:4px;transition:color .2s}
+    .vid-close:hover{color:#fff}
   </style>
 </head>
 <body>
@@ -733,6 +751,59 @@
   }
   drawMap();
   window.addEventListener('resize',drawMap);
+
+  // Video modal
+  function openVid(url,title){
+    var p=document.getElementById('vid-player');
+    p.src=url; p.load();
+    document.getElementById('vid-title').textContent=title||'';
+    document.getElementById('vid-direct').href=url;
+    document.getElementById('vid-modal').classList.add('open');
+    document.body.style.overflow='hidden';
+  }
+  function closeVid(){
+    var p=document.getElementById('vid-player');
+    p.pause(); p.removeAttribute('src'); p.load();
+    document.getElementById('vid-modal').classList.remove('open');
+    document.body.style.overflow='';
+  }
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeVid()});
+
+  // Intercept all ep-card <a> clicks → open modal
+  document.querySelectorAll('a.ep-card').forEach(function(card){
+    card.addEventListener('click',function(e){
+      e.preventDefault();
+      var url=this.href;
+      var title=this.querySelector('.ep-title');
+      openVid(url,title?title.textContent:'');
+    });
+  });
+  // Also intercept ep-link clicks inside cards (prevent double-open from bubbling)
+  document.querySelectorAll('.ep-card .ep-link').forEach(function(link){
+    link.addEventListener('click',function(e){e.stopPropagation()});
+  });
+  // Featured card (div with onclick) — override to use modal
+  var featured=document.querySelector('div.ep-card.featured');
+  if(featured){
+    featured.onclick=function(){
+      openVid('https://v.nostr.build/O60O7HrIxj8mfjrE.mp4','One Love Bitcoin — Official Trailer');
+    };
+  }
+
 </script>
+
+<!-- VIDEO MODAL -->
+<div class="vid-modal" id="vid-modal" onclick="if(event.target===this)closeVid()">
+  <div class="vid-inner">
+    <video id="vid-player" controls preload="metadata" playsinline></video>
+    <div class="vid-meta">
+      <span class="vid-title" id="vid-title"></span>
+      <div class="vid-actions">
+        <a class="vid-direct" id="vid-direct" href="#" target="_blank" rel="noopener">⬇ Direct link</a>
+        <button class="vid-close" onclick="closeVid()">✕</button>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
 </html>
