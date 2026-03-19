@@ -1,0 +1,60 @@
+/* ── Donate Section ───────────────────────────────────── */
+.donate-sect{background:var(--bg);padding:5rem 2rem;border-top:1px solid rgba(247,147,26,.12)}
+.donate-inner{max-width:900px;margin:0 auto}
+.donate-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.2rem,6vw,4rem);letter-spacing:.04em;color:#fff;text-align:center;margin:0 0 .5rem}
+.donate-sub{text-align:center;color:var(--muted);font-size:1.05rem;line-height:1.6;margin:0 0 1.5rem}
+.donate-sub strong{color:var(--accent)}
+.donate-howto{max-width:600px;margin:0 auto 2rem;background:rgba(247,147,26,.05);border:1px solid rgba(247,147,26,.15);border-radius:8px;padding:.75rem 1.25rem}
+.donate-howto summary{cursor:pointer;color:var(--accent);font-size:.9rem;font-weight:600;letter-spacing:.05em;user-select:none}
+.donate-howto ol{margin:.75rem 0 0 1.25rem;color:var(--muted);font-size:.88rem;line-height:1.7}
+.donate-howto p{margin:.75rem 0 0;color:var(--muted);font-size:.82rem}
+.donate-howto code{background:rgba(255,255,255,.06);padding:.1em .35em;border-radius:3px;font-size:.82rem;word-break:break-all}
+.donate-howto a{color:var(--accent)}
+
+/* controls */
+.lb-controls{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center;margin-bottom:1.25rem}
+#country-search{flex:1;min-width:180px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:.55rem .9rem;color:#fff;font-size:.95rem;outline:none}
+#country-search:focus{border-color:var(--accent)}
+.lb-tabs{display:flex;gap:.4rem}
+.lb-tab{background:transparent;border:1px solid rgba(255,255,255,.15);color:var(--muted);padding:.4rem .85rem;border-radius:20px;cursor:pointer;font-size:.82rem;transition:all .2s}
+.lb-tab.active{border-color:var(--accent);color:var(--accent);background:rgba(247,147,26,.08)}
+.zap-status{font-size:.78rem;color:var(--muted);margin-left:auto}
+.zap-status.ok{color:#4ade80}
+
+/* leaderboard rows */
+.leaderboard-list{display:flex;flex-direction:column;gap:.45rem}
+.lb-row{display:grid;grid-template-columns:2rem 2rem 1fr auto auto;align-items:center;gap:.6rem;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:.65rem 1rem;cursor:pointer;transition:background .18s,border-color .18s}
+.lb-row:hover{background:rgba(247,147,26,.06);border-color:rgba(247,147,26,.2)}
+.lb-rank{font-size:.78rem;color:var(--muted);text-align:right;font-variant-numeric:tabular-nums}
+.lb-flag{font-size:1.3rem;line-height:1}
+.lb-info{display:flex;flex-direction:column;gap:.2rem;min-width:0}
+.lb-name{font-size:.9rem;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-visited-badge{font-size:.68rem;color:var(--accent);font-weight:600;letter-spacing:.06em;opacity:.8}
+.lb-progress-wrap{width:100%;height:3px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:.25rem}
+.lb-progress-bar{height:100%;border-radius:2px;background:var(--accent);transition:width .4s}
+.lb-amount{font-size:.82rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums;text-align:right}
+.lb-amount.has-sats{color:#fff}
+.lb-donate-btn{background:var(--accent);color:#000;border:none;padding:.35rem .75rem;border-radius:5px;font-size:.78rem;font-weight:700;cursor:pointer;white-space:nowrap;transition:opacity .18s}
+.lb-donate-btn:hover{opacity:.85}
+.lb-none{text-align:center;color:var(--muted);padding:2rem;font-size:.9rem}
+
+/* donate modal */
+.dmodal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:2000;align-items:center;justify-content:center;padding:1rem}
+.dmodal-overlay.open{display:flex}
+.dmodal-box{background:#111;border:1px solid rgba(247,147,26,.25);border-radius:14px;padding:2rem 1.75rem;max-width:420px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+.dmodal-close{position:absolute;top:.85rem;right:1rem;background:transparent;border:none;color:var(--muted);font-size:1.3rem;cursor:pointer;line-height:1}
+.dmodal-flag{font-size:3rem;text-align:center;margin-bottom:.5rem}
+.dmodal-name{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.05em;text-align:center;margin:0 0 .25rem;color:#fff}
+.dmodal-type{text-align:center;font-size:.82rem;color:var(--accent);font-weight:600;letter-spacing:.08em;margin-bottom:1rem}
+.dmodal-progress-wrap{width:100%;height:6px;background:rgba(255,255,255,.08);border-radius:3px;margin-bottom:.5rem}
+.dmodal-progress-bar{height:100%;border-radius:3px;background:var(--accent);transition:width .4s}
+.dmodal-progress-label{font-size:.78rem;color:var(--muted);text-align:center;margin-bottom:1.25rem}
+.dmodal-qr-label{font-size:.85rem;color:var(--muted);text-align:center;margin:1rem 0 .5rem;font-weight:600}
+.dmodal-qr-canvas{display:block;margin:0 auto .75rem;border-radius:8px;border:4px solid #fff}
+.dmodal-address-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem;background:rgba(255,255,255,.05);border-radius:6px;padding:.5rem .75rem}
+.dmodal-address-row code{flex:1;font-size:.78rem;word-break:break-all;color:#ddd}
+.dmodal-address-row button{background:rgba(247,147,26,.15);border:1px solid rgba(247,147,26,.3);color:var(--accent);padding:.3rem .6rem;border-radius:4px;cursor:pointer;font-size:.75rem;white-space:nowrap;flex-shrink:0}
+.dmodal-note{font-size:.78rem;color:var(--muted);text-align:center;line-height:1.5;margin:.5rem 0 0;padding:.6rem;background:rgba(247,147,26,.06);border-radius:6px;border:1px solid rgba(247,147,26,.15)}
+.dmodal-note strong{color:var(--accent)}
+.dmodal-onchain{margin-top:1.25rem;border-top:1px solid rgba(255,255,255,.08);padding-top:1rem}
+.dmodal-onchain summary{cursor:pointer;color:var(--muted);font-size:.82rem;margin-bottom:.75rem;user-select:none}

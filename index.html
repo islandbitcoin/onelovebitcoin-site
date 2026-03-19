@@ -328,6 +328,7 @@
       cursor:pointer;line-height:1;padding:.2rem .4rem;border-radius:4px;transition:color .2s}
     .vid-close:hover{color:#fff}
   </style>
+  <link rel="stylesheet" href="donate.css">
 </head>
 <body>
 <div id="prog"></div>
@@ -610,6 +611,65 @@
   </div>
 </section>
 
+
+<!-- DONATE SECTION -->
+<section id="donate" class="donate-sect">
+  <div class="donate-inner">
+    <h2 class="donate-title">SEND DREAD TO YOUR COUNTRY</h2>
+    <p class="donate-sub">Reach <strong>1,000,000 sats</strong> and Dread comes to you within 30 days.<br>Already visited? <strong>5,000,000 sats</strong> brings him back.</p>
+    <div class="donate-howto">
+      <details>
+        <summary>How it works ▾</summary>
+        <ol>
+          <li>Find your country below and click <strong>⚡ Donate</strong></li>
+          <li>Pay <code>jabs@flashapp.me</code> from any Lightning wallet</li>
+          <li>Include your <strong>country name</strong> in the Nostr zap note — this is how it gets counted</li>
+          <li>First country to hit 1,000,000 sats → Dread books the flight</li>
+        </ol>
+        <p>On-chain: <code>bc1qammuqhlk7qx4rke0cjj8hu4uctwp765cts2mz3</code> — DM <a href="https://njump.me/npub1zp7fwkfqj7tzduxmprnvq02w9ntk0reav4pak4dkyp8r4gwmgujseg3nnf" target="_blank">@jabs</a> on Nostr to credit.</p>
+      </details>
+    </div>
+    <div class="lb-controls">
+      <input type="text" id="country-search" placeholder="🔍 Search countries..." oninput="filterLeaderboard()">
+      <div class="lb-tabs">
+        <button class="lb-tab active" data-tab="all" onclick="setTab('all')">All</button>
+        <button class="lb-tab" data-tab="new" onclick="setTab('new')">Not Visited</button>
+        <button class="lb-tab" data-tab="return" onclick="setTab('return')">Return Visit</button>
+      </div>
+      <span id="zap-status" class="zap-status">⚡ Connecting to Nostr...</span>
+    </div>
+    <div id="leaderboard" class="leaderboard-list"></div>
+  </div>
+</section>
+
+<!-- DONATE MODAL -->
+<div id="donate-modal" class="dmodal-overlay" onclick="closeDonate()">
+  <div class="dmodal-box" onclick="event.stopPropagation()">
+    <button class="dmodal-close" onclick="closeDonate()">✕</button>
+    <div id="dmodal-flag" class="dmodal-flag"></div>
+    <h3 id="dmodal-name" class="dmodal-name"></h3>
+    <div id="dmodal-type" class="dmodal-type"></div>
+    <div class="dmodal-progress-wrap"><div id="dmodal-progress-bar" class="dmodal-progress-bar" style="width:0%"></div></div>
+    <p id="dmodal-progress-label" class="dmodal-progress-label"></p>
+    <p class="dmodal-qr-label">⚡ Lightning Address</p>
+    <canvas id="dmodal-ln-qr" class="dmodal-qr-canvas"></canvas>
+    <div class="dmodal-address-row">
+      <code>jabs@flashapp.me</code>
+      <button onclick="copyLN()">Copy</button>
+    </div>
+    <p class="dmodal-note">Include <strong>"<span id="dmodal-country-note"></span>"</strong> in your Nostr zap note so it counts on the leaderboard</p>
+    <details class="dmodal-onchain">
+      <summary>🔗 On-chain Bitcoin (larger amounts)</summary>
+      <canvas id="dmodal-btc-qr" class="dmodal-qr-canvas" style="margin-top:.75rem"></canvas>
+      <div class="dmodal-address-row">
+        <code>bc1qammuqhlk7qx4rke0cjj8hu4uctwp765cts2mz3</code>
+        <button onclick="copyBTC()">Copy</button>
+      </div>
+      <p class="dmodal-note">DM <a href="https://njump.me/npub1zp7fwkfqj7tzduxmprnvq02w9ntk0reav4pak4dkyp8r4gwmgujseg3nnf" target="_blank">@jabs on Nostr</a> with your TX to get credited</p>
+    </details>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer>
   <div class="foot-inner">
@@ -830,5 +890,7 @@
     </div>
   </div>
 </div>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+  <script src="donate.js"></script>
 </body>
 </html>
