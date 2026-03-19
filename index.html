@@ -652,7 +652,7 @@
     <div class="dmodal-progress-wrap"><div id="dmodal-progress-bar" class="dmodal-progress-bar" style="width:0%"></div></div>
     <p id="dmodal-progress-label" class="dmodal-progress-label"></p>
     <p class="dmodal-qr-label">⚡ Lightning Address</p>
-    <canvas id="dmodal-ln-qr" class="dmodal-qr-canvas"></canvas>
+    <img id="dmodal-ln-qr" class="dmodal-qr-canvas" alt="Lightning QR" width="200" height="200">
     <div class="dmodal-address-row">
       <code>jabs@flashapp.me</code>
       <button onclick="copyLN()">Copy</button>
@@ -660,7 +660,7 @@
     <p class="dmodal-note">Include <strong>"<span id="dmodal-country-note"></span>"</strong> in your Nostr zap note so it counts on the leaderboard</p>
     <details class="dmodal-onchain">
       <summary>🔗 On-chain Bitcoin (larger amounts)</summary>
-      <canvas id="dmodal-btc-qr" class="dmodal-qr-canvas" style="margin-top:.75rem"></canvas>
+      <img id="dmodal-btc-qr" class="dmodal-qr-canvas" alt="Bitcoin QR" width="200" height="200" style="margin-top:.75rem">
       <div class="dmodal-address-row">
         <code>bc1qammuqhlk7qx4rke0cjj8hu4uctwp765cts2mz3</code>
         <button onclick="copyBTC()">Copy</button>
@@ -890,7 +890,6 @@
     </div>
   </div>
 </div>
-  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
   <script src="donate.js"></script>
 </body>
 </html>

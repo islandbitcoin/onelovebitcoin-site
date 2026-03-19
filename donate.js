@@ -193,13 +193,9 @@ window.openDonate = function(name) {
     `${fmtSats(sats)} / ${fmtSats(goal)} sats raised (${pct}%)`;
   document.getElementById('dmodal-country-note').textContent = name;
 
-  // QR codes
-  if (window.QRCode) {
-    const lnVal = 'lightning:' + LN_ADDRESS;
-    const btcVal = 'bitcoin:' + BTC_ADDRESS;
-    renderQR('dmodal-ln-qr', lnVal);
-    renderQR('dmodal-btc-qr', btcVal);
-  }
+  // QR codes — encode Lightning address with country comment hint
+  renderQR('dmodal-ln-qr',  'lightning:' + LN_ADDRESS);
+  renderQR('dmodal-btc-qr', 'bitcoin:'   + BTC_ADDRESS);
 
   document.getElementById('donate-modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -210,10 +206,12 @@ window.closeDonate = function() {
   document.body.style.overflow = '';
 };
 
-function renderQR(canvasId, value) {
-  const el = document.getElementById(canvasId);
-  if (!el || !window.QRCode) return;
-  QRCode.toCanvas(el, value, {width:200, margin:2, color:{dark:'#000',light:'#fff'}}, ()=>{});
+function renderQR(imgId, value) {
+  const el = document.getElementById(imgId);
+  if (!el) return;
+  const encoded = encodeURIComponent(value);
+  el.src = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&margin=10&bgcolor=ffffff&color=000000&data=${encoded}`;
+  el.style.borderRadius = '8px';
 }
 
 window.copyLN  = function() { navigator.clipboard.writeText(LN_ADDRESS); };
