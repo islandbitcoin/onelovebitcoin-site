@@ -5,7 +5,7 @@
 const DREAD_PUBKEY = '107c975920979626f0db08e6c03d4e2cd7678f3d6543db55b6204e3aa1db4725';
 const LN_ADDRESS   = 'jabs@flashapp.me';
 const BTC_ADDRESS  = 'bc1qammuqhlk7qx4rke0cjj8hu4uctwp765cts2mz3';
-const NOSTR_LINK   = 'https://njump.me/npub1zp7fwkfqj7tzduxmprnvq02w9ntk0reav4pak4dkyp8r4gwmgujseg3nnf';
+const NOSTR_LINK   = 'https://njump.me/npub1qqqqqq0u2gj96tdfvqymdqn739k4s0h9rzdwyegfmalv28j7a5ssh5ntu2';
 const GOAL_NEW     = 1000000;   // sats
 const GOAL_RETURN  = 5000000;  // sats for already-visited
 const RELAYS = [
